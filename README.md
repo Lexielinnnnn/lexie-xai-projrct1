@@ -6,11 +6,9 @@
 
 Hidden Instructions is an interactive Responsible AI teaching demo. An assistant summarizes a fictional meeting email while holding an access code it has been told to keep secret. Players add text to the email and try to make that code appear in the reply. The audience is students and visitors who may be unfamiliar with AI security.
 
-The design question is: **How can a short email challenge help people understand the conflict between external content and an assistant's confidentiality instructions?**
+The design question is: **How can an interactive email challenge help people understand how instructions hidden in an email can lead an AI assistant to reveal confidential information?**
 
-The project connects prompt injection, red-teaming, human–AI interaction, and AI harms. External material can contain instructions that redirect a language-model application, a problem discussed by OWASP [1] and Greshake et al. [2]. Here, the email is material to read, but the player's text tries to make it a source of instructions. In a real system, a confidentiality failure could affect both the person using the assistant and people whose information it can access.
-
-The contribution is an educational interface combining a familiar scenario, editable requests, optional hints, real model replies, and feedback tied to the result. Prompt injection itself is an existing problem; this project does not claim to invent a new attack or defense.
+The project connects prompt injection, red-teaming, human–AI interaction, and AI harms. External material can contain instructions that redirect a language-model application, a problem discussed by OWASP [1] and Greshake et al. [2]. The email is a material to read, but the player's text tries to make it a source of instructions.
 
 ## Setup
 
@@ -31,7 +29,7 @@ Press **Ctrl+C** in the terminal to stop the server. Restart after changing conf
 
 Keep your API key private and do not commit your filled-in `config.env` to GitHub. A key-free `config.example.env` is included for sharing: if `config.env` is absent from a repository download, copy the example and rename it `config.env` before setup.
 
-Connecting lists models without generating a reply. Each **Send email** uses one generation request. There is no local request-count cap, but Duke's account quotas and rate limits still apply. The interface reports token usage when the API supplies it; this is not an account balance or a complete billing record. Cancelled or failed requests may still consume quota. University-provided access does not imply unlimited or universally free usage.
+Connecting lists models without generating a reply. Each **Send email** uses one generation request. There is no local request-count cap, but Duke's account quotas and rate limits still apply. The interface reports token usage when the API supplies it; this is not an account balance or a complete billing record. Cancelled or failed requests may still consume quota.
 
 To keep API usage manageable within a limited budget, MAX_OUTPUT_TOKENS=1000 limits the output tokens per request. It does not limit model size or include input tokens. Some models may need a larger output budget or a different token-limit parameter. You can increase this value if responses are cut short, though doing so may increase usage and cost. Model access depends on your API account, not this setting.
 
@@ -45,7 +43,7 @@ Feedback distinguishes observations such as complete-code disclosure, repeated r
 
 ### Session data
 
-Use **Session data → Download session** to save the current round's inputs, replies, model ID, returned settings, token usage when available, and fictional code. The export excludes your API key. Download before starting a new round or changing models. These records let you revisit a result and document examples; they are not automatically a controlled experiment.
+Use **Session data → Download session** to save the current round's inputs, replies, model ID, returned settings, token usage when available, and fictional code. The export excludes your API key. Download before starting a new round or changing models. These records let you revisit a result and document examples.
 
 ## How It Works
 
@@ -63,13 +61,13 @@ The feedback also changed during development. A success/failure message alone of
 
 I tried several models during development. Some revealed the code whenever my requests mentioned it, while others did not reveal it in any of my attempts. In my trials, **deepseek-v4-pro** produced both successful and unsuccessful attempts, making it a better fit for the level of challenge I wanted. The outcome also depended on the wording of the request. These were informal trials, not a controlled comparison with fixed attempt counts and fully documented settings, so I do not report success rates or rank the models' overall security. Players can still select their own model.
 
-Basic application behavior was checked with simulated API responses, including one request per send, feedback selection, model-change resets, and stopping a pending wait. A separate simulated backend check confirmed requests could continue beyond the old 12-call cap. These checks concern software behavior, not model safety or learning outcomes. No formal study has measured whether the experience improves understanding.
+Basic application behavior was checked with simulated API responses, including one request per send, feedback selection, model-change resets, and stopping a pending wait. A separate simulated backend check confirmed requests could continue beyond the old 12-call cap.
 
 ## Limitations and Future Work
 
-This is one fictional email scenario, so it cannot establish how often real systems leak information. Results depend on the selected model, settings, and request wording. Detection checks only the exact, complete code and may miss partial or disguised disclosures. The player flow has no ordinary-email control, so a disclosure does not establish that the added text was its sole cause. The code is also accessible through browser tools and session exports: this is a teaching demo, not a protected competition.
+This is one fictional email scenario, so it cannot establish how often real systems leak information. Results depend on the selected model, settings, and request wording. Detection checks only the exact, complete code and may miss partial or disguised disclosures.
 
-The app sends submitted text to the configured API provider. Do not enter real secrets or personal information. The API key stays in the local server configuration and is not sent to the browser. The server is intended for local use; public hosting would need additional access controls and cost protections.
+The API key stays in the local server configuration and is not sent to the browser. The server is intended for local use; public hosting would need additional access controls and cost protections.
 
 This version uses the Duke AI Gateway to keep development costs manageable through university-provided access. If the project proves useful, a next step would be to test it with other API providers and make it easier for people outside Duke to use. The API address is already configurable, but other providers have not been validated for this release. A small usability study could also check whether players can explain the difference between reading external content and following its instructions after trying the challenge.
 
