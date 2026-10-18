@@ -1,0 +1,1 @@
+{"name":"hidden-instructions-prototype","version":"0.2.0","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","test":"node --test src/*.test.js"},"dependencies":{"@mlc-ai/web-llm":"0.2.86"},"devDependencies":{"esbuild":"0.25.10","jsdom":"26.1.0"}}

@@ -1,0 +1,8 @@
+{
+  "version": "3.0-api",
+  "sha256": {
+    "index.html": "385ab06bfad6605cec91c747334c163d899e2e7bc66dbad711da19e52770f430",
+    "app.js": "47a6a27a09510fbb1690634ddd52b5331b5f31c7904291f9fb59b0cc0cffd340",
+    "style.css": "b85bb97cd28201960cd902be64c05dcb494741ad22f5d3a6c92b07703d9794e7"
+  }
+}
